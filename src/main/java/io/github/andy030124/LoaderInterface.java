@@ -11,10 +11,8 @@ import javafx.scene.Scene;
 public interface LoaderInterface {
     /**
      * Load in specific project folder, and load routes controllers
-     * @param projectName for the main folder 
-     * @param routesFolder folder where placed Routers controllers 
      */
-    public void load(String projectName, String routesFolder);
+    public void load();
     /**
      * Use route to execute the constructor controller
      * @param route Route registred to launch
