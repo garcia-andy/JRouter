@@ -1,8 +1,10 @@
-package io.github.andy030124;
+package io.github.andy030124.Loaders;
 /* IMPORTS ESPECIFICS */
 import javafx.stage.Stage;
 /* IMPORTS ALL */
 import java.lang.reflect.*;
+
+import io.github.andy030124.Utils.FolderParser;
 
 /**
  * Principal Interface Implementation for use JRouterFX

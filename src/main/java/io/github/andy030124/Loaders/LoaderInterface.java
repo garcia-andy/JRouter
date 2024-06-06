@@ -1,4 +1,4 @@
-package io.github.andy030124;
+package io.github.andy030124.Loaders;
 
 import java.io.IOException;
 import javafx.scene.Scene;

@@ -1,4 +1,4 @@
-package io.github.andy030124;
+package io.github.andy030124.Loaders;
 /* IMPORTS ESPECIFICS */
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 /* IMPORTS ALL */
 import java.util.*;
 
-import io.github.andy030124.hooks.Hooks;
+import io.github.andy030124.Utils.FolderParser;
+import io.github.andy030124.hooks.*;
 import io.github.andy030124.reactive.*;
 import lombok.*;
 
@@ -21,9 +22,9 @@ import lombok.*;
 */
 public abstract class MainLoader implements LoaderInterface {
     @Getter
-    protected Signal<String> _activeRoute = Hooks.useSignal();
+    protected Signal<String> _activeRoute = SignalHook.useSignal();
     @Getter
-    protected State<Object> _activeController = Hooks.useState();
+    protected State<Object> _activeController = StatesHook.useState();
 
     /** 
      * Map with all routes and classes resolveds

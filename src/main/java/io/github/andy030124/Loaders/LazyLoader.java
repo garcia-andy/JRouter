@@ -1,5 +1,5 @@
-package io.github.andy030124;
-
+package io.github.andy030124.Loaders;
+import io.github.andy030124.Utils.FolderParser;
 /* IMPORTS ESPECIFICS */
 import javafx.stage.Stage;
 

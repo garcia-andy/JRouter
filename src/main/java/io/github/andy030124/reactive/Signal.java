@@ -1,7 +1,6 @@
 package io.github.andy030124.reactive;
-import io.github.andy030124.hooks.Hooks;
+import io.github.andy030124.hooks.*;
 import lombok.Getter;
-
 import java.util.*;
 
 
@@ -19,7 +18,7 @@ public class Signal<T> implements Observer {
     };
 
     @Getter
-    private State<T> _internalState = Hooks.useState();
+    private State<T> _internalState = StatesHook.useState();
     private Map<SignalType, ArrayList<SignalCall<T>> > _calls = new HashMap<>(){{
         put(SignalType.onSubscribe, new ArrayList<SignalCall<T>>());
         put(SignalType.onGet, new ArrayList<SignalCall<T>>());
@@ -28,7 +27,7 @@ public class Signal<T> implements Observer {
     }};
     
     public Signal(T value){
-        _internalState = Hooks.useState(value,this);
+        _internalState = StatesHook.useState(value,this);
     }
 
     public void listen(SignalType type, SignalCall<T> call){ 

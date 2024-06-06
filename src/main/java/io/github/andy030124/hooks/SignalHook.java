@@ -1,28 +1,14 @@
 package io.github.andy030124.hooks;
-import java.util.ArrayList;
 
 import io.github.andy030124.reactive.*;
-import io.github.andy030124.reactive.Signal.SignalCall;
-import javafx.util.Pair;
+import java.util.ArrayList;
 
-public class Hooks {
+public class SignalHook {
 
-public static <T>State<T> useState()
-{ return useState(null); }
-
-public static <T,O extends Observer>State<T> useState(O obj)
-{ return useState(null, obj); }
-
-public static <T>State<T> useState(T init)
-{ return new State<T>(init); }
-
-public static <T,O extends Observer>State<T> useState(T init, O obj){
-    State<T> state = useState(init);
-    state.subscribe(obj);
-    return state;
-}
-
-
+    class SignalDescriptor<T>{
+        public Signal.SignalType type; 
+        public Signal.SignalCall<T> call;
+    }
 
 public static <T>Signal<T> useSignal(
     T init,
@@ -59,13 +45,13 @@ public static <T>Signal<T> useSignal(
 
 public static <T>Signal<T> useSignal(
     T init, 
-    ArrayList<Pair<Signal.SignalType, Signal.SignalCall<T>>> signals
+    ArrayList<SignalDescriptor<T>> signals
 ){
     Signal<T> sign = useSignal(init);
     for(
-        Pair<Signal.SignalType, Signal.SignalCall<T>> signal:
+        SignalDescriptor<T> signal:
         signals
-    ) sign.listen(signal.getKey(), signal.getValue());
+    ) sign.listen(signal.type, signal.call);
     return sign;
 }
 
