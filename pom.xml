@@ -29,23 +29,6 @@
         </developer>
     </developers>
 
-    <scm>
-        <connection>scm:git:https://github.com/garcia-andy/JRouterFX.git</connection>
-        <developerConnection>scm:https://github.com/garcia-andy/JRouterFX.git</developerConnection>
-        <url>https://github.com/garcia-andy/JRouterFX</url>
-    </scm>
-
-    <distributionManagement>
-      <snapshotRepository>
-          <id>ossrh</id>
-          <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-      </snapshotRepository>
-      <repository>
-          <id>ossrh</id>
-          <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-      </repository>
-</distributionManagement>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
@@ -74,35 +57,11 @@
             <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-          <groupId>org.junit.jupiter</groupId>
-          <artifactId>junit-jupiter</artifactId>
-          <version>5.7.1</version>
-          <scope>test</scope>
-      </dependency>
-      <dependency>
-          <groupId>org.assertj</groupId>
-          <artifactId>assertj-core</artifactId>
-          <version>3.19.0</version>
-          <scope>test</scope>
-        </dependency>
     </dependencies>
 
  <build>
     <pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.1.0</version>
@@ -123,14 +82,6 @@
                             <version>1.18.30</version>
                         </path>                         
                     </annotationProcessorPaths>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.3</version>
-                <configuration>
-                    <mainClass>example.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -205,10 +156,6 @@
       </build>
   </profile>
 </profiles>
-
-
-
-
 
 
 
