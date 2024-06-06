@@ -4,19 +4,24 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-/*
+/**
 *   Parser folders and files utilities (static access)
 *   @author Andy Garcia
 *   @version 0.1, 2024/5/6
 */ 
 public class FolderParser {
 
-    /*
+    /**
+     * Default Constructor (all methods are statics)
+    */
+    public FolderParser(){}
+
+    /**
      * Optional interface more small params
-     * @param contentPath: String of absolute route to the folder
-     * @param AbsoluteStart: String for startsWith required in contentPath
-     * @param ends: String for endsWith
-     * @return ArrayList<String> with relatives filesNames
+     * @param contentPath String of absolute route to the folder
+     * @param AbsoluteStart String for startsWith required in contentPath
+     * @param ends String for endsWith
+     * @return ArrayList with relatives filesNames
      */
     public static ArrayList<String> printDir(
         String contentPath, 
@@ -24,14 +29,15 @@ public class FolderParser {
         String ends
     ){ return printDir(contentPath, AbsoluteStart, ends, null); }
 
-    /*
+    /**
      * Verify if a Path have all constraits
-     * @param fpath: Path of file to verify
-     * @param prefix: Prefix required in the relative path to file
-     * @param pathStarts: Absolute Path starts with
-     * @param nameStarts: Relative Path starts with
-     * @param ends: Absolute/Relative Path ends with
-     * @return boolean: true if pass all test
+     * @param fpath Path of file to verify
+     * @param absoluteRootPath Absolute Path for the working directory to parse
+     * @param prefix Prefix required in the relative path to file
+     * @param pathStarts Absolute Path starts with
+     * @param nameStarts Relative Path starts with
+     * @param ends Absolute/Relative Path ends with
+     * @return boolean true if pass all test
      */
     public static boolean constraits(
         Path fpath,
@@ -66,9 +72,9 @@ public class FolderParser {
         );
     }
 
-    /*
+    /**
      * Private implementation of directory and files parser
-     */
+    */
     private static ArrayList<String> pdir_impl(
         String absoluteRootPath,
         String prefix,
@@ -121,13 +127,13 @@ public class FolderParser {
         return verifiedFiles;
     }
 
-    /*
+    /**
      * Principal Interface for use full featured directories parser
      * @param contentPath String of absolute route to the folder
      * @param AbsoluteStart String for startsWith required in contentPath
      * @param ends String for endsWith
      * @param NameStart String for verify the name of files starts with
-     * @return ArrayList<String> with relatives filesNames
+     * @return ArrayList with relatives filesNames
      */
     public static ArrayList<String> printDir(
         String contentPath, 

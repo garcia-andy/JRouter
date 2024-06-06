@@ -1,3 +1,6 @@
+/**
+ * Principal module with all requireds and exports
+ */
 module JRouterFX {
     requires javafx.controls;
     requires javafx.fxml;
