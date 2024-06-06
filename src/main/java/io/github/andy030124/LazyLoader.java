@@ -1,8 +1,8 @@
 package io.github.andy030124;
+
 /* IMPORTS ESPECIFICS */
 import javafx.stage.Stage;
-/* IMPORTS ALL */
-import java.lang.reflect.*;
+
 
 public class LazyLoader extends MainLoader {
 
@@ -73,31 +73,12 @@ public class LazyLoader extends MainLoader {
     @Override
     public Object launch(String route) {
         Object ret = null;
+        if( _activeRoute.get().equals(route) ) return ret;
 
         Class<?> cls = _routes.get(route);
         if( cls == null )
             cls = find(route);
-        String errSms = "Error while launch route -> " + route + " [";
-        try {
-
-            Constructor<?> constr = cls.getConstructor(MainLoader.class);
-            if( constr != null )
-            ret = constr.newInstance(this);
-
-        } catch (
-                NoSuchMethodException 
-            |   SecurityException 
-            |   InstantiationException 
-            |   IllegalAccessException
-            |   IllegalArgumentException 
-            |   InvocationTargetException 
-        e){ e.printStackTrace(); errSms += e.getMessage() + "]"; }
-
-        System.out.println(
-            (ret != null) 
-            ? ("Launching Route -> " + route)
-            : (errSms)
-        );
+        ret = load_impl(cls, route);
         return ret; 
     }
     

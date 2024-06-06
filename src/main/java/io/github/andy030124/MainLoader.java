@@ -1,12 +1,17 @@
 package io.github.andy030124;
 /* IMPORTS ESPECIFICS */
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 /* IMPORTS ALL */
 import java.util.*;
+
+import io.github.andy030124.hooks.Hooks;
+import io.github.andy030124.reactive.*;
 import lombok.*;
 
 /**
@@ -15,6 +20,10 @@ import lombok.*;
  * @version 0.1, 2024/5/6
 */
 public abstract class MainLoader implements LoaderInterface {
+    @Getter
+    protected Signal<String> _activeRoute = Hooks.useSignal();
+    @Getter
+    protected State<Object> _activeController = Hooks.useState();
 
     /** 
      * Map with all routes and classes resolveds
@@ -169,6 +178,39 @@ public abstract class MainLoader implements LoaderInterface {
 
         return ret;
     }
+
+    protected Object load_impl(Class<?> cls, String route){
+        Object ret = null;
+        if( cls == null ) return ret;
+
+        String errSms = "Error while launch route -> " + route + " [";
+        try {
+
+            Constructor<?> constr = cls.getConstructor(MainLoader.class);
+            if( constr != null ){
+                ret = constr.newInstance(this);
+                _activeRoute.set(route);
+                _activeController.set(ret);
+            }
+
+        } catch (
+                NoSuchMethodException 
+            |   SecurityException 
+            |   InstantiationException 
+            |   IllegalAccessException
+            |   IllegalArgumentException 
+            |   InvocationTargetException 
+        e){ e.printStackTrace(); errSms += e.getMessage() + "]"; }
+
+        System.out.println(
+            (ret != null) 
+            ? ("Launching Route -> " + route)
+            : (errSms)
+        );
+
+        return ret;
+    }
+
 
     /* Interface Methods */
 

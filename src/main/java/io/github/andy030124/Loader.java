@@ -112,29 +112,11 @@ public class Loader extends MainLoader {
     @Override
     public Object launch(String route){
         Object ret = null;
+        if( _activeRoute.get().equals(route) ) return ret;
 
         Class<?> cls = _routes.get(route);
-        String errSms = "Error while launch route -> " + route + " [";
-        try {
-
-            Constructor<?> constr = cls.getConstructor(MainLoader.class);
-            if( constr != null )
-            ret = constr.newInstance(this);
-
-        } catch (
-                NoSuchMethodException 
-            |   SecurityException 
-            |   InstantiationException 
-            |   IllegalAccessException
-            |   IllegalArgumentException 
-            |   InvocationTargetException 
-        e){ e.printStackTrace(); errSms += e.getMessage() + "]"; }
-
-        System.out.println(
-            (ret != null) 
-            ? ("Launching Route -> " + route)
-            : (errSms)
-        );
+        ret = load_impl(cls, route);
+        
         return ret; 
     }
 
