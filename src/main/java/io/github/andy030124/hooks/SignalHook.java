@@ -3,13 +3,30 @@ package io.github.andy030124.hooks;
 import io.github.andy030124.reactive.*;
 import java.util.ArrayList;
 
+/**
+ * Class for Signals Hooks Creations
+ */
 public class SignalHook {
 
+    /**
+     * Class with the Signal Information
+     */
     class SignalDescriptor<T>{
+        /** Signal type */
         public Signal.SignalType type; 
+        /** Signal Callback */
         public Signal.SignalCall<T> call;
     }
 
+/**
+ * The fullest implemented use signal
+ * @param init the init data for the Signal
+ * @param onChange optional onChange callback
+ * @param onRequest optional onRequest callback
+ * @param onSubscribe optional onSubscribe callback
+ * @param onGet optional onGet callback
+ * @return The Signal Object
+ */
 public static <T>Signal<T> useSignal(
     T init,
     Signal.SignalCall<T> onChange,
@@ -27,12 +44,28 @@ public static <T>Signal<T> useSignal(
     return sign;
 }
 
+/**
+* The implemented use signal default (all null)
+* @return The Signal Object with null data and not callbacks
+*/
 public static <T>Signal<T> useSignal()
 { return useSignal(null); }
 
+/**
+ * The implemented use signal with only init data
+ * @param init the init data for the Signal
+ * @return The Signal Object without callbacks
+ */
 public static <T>Signal<T> useSignal(T init)
 { return useSignal(init, null, null, null, null); }
 
+/**
+ * The implemented use signal with init data and one callback
+ * @param init the init data for the Signal
+ * @param type the type of the callback to register
+ * @param call the callback to register for type
+ * @return The Signal Object
+ */
 public static <T>Signal<T> useSignal(
     T init, 
     Signal.SignalType type, 
@@ -43,6 +76,13 @@ public static <T>Signal<T> useSignal(
     return sign;
 }
 
+/**
+ * The implemented use signal with init data and 
+ * ArrayList of SignalDescriptor for callbacks
+ * @param init the init data for the Signal
+ * @param signals an ArrayList of SignalDescriptor for register callbacks
+ * @return The Signal Object
+ */
 public static <T>Signal<T> useSignal(
     T init, 
     ArrayList<SignalDescriptor<T>> signals

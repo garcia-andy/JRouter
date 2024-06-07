@@ -139,6 +139,8 @@ public abstract class MainLoader implements LoaderInterface {
             try {
 
                 Class<?> cls = getClass().getClassLoader().loadClass(pkgName);
+                if( cls == null ) continue;
+
                 if(
                 (
                     file.toLowerCase().contains("index") 
@@ -183,6 +185,9 @@ public abstract class MainLoader implements LoaderInterface {
     protected Object load_impl(Class<?> cls, String route){
         Object ret = null;
         if( cls == null ) return ret;
+
+        JRouter isRouter = cls.getAnnotation(JRouter.class);
+        if( isRouter == null ) return ret;
 
         String errSms = "Error while launch route -> " + route + " [";
         try {
