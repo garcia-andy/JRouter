@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mvn clean package -P docs
+mvn package -P docs

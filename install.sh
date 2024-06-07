@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bash ./release.sh && bash ./docs.sh && mvn install:install-file \
+mvn clean && bash ./release.sh && bash ./docs.sh && mvn install:install-file \
 -Dfile=./target/jrouterfx-0.0.1.jar \
 -DpomFile=./pom.xml \
 -Dsources=./target/jrouterfx-0.0.1-sources.jar \
@@ -10,4 +10,3 @@ bash ./release.sh && bash ./docs.sh && mvn install:install-file \
 -Dversion=0.0.1 \
 -Dpackaging=jar \
 -DcreateChecksum=true
-

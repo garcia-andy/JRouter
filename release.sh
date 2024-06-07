@@ -1,4 +1,4 @@
 #!/bin/bash
 
-mvn clean package -P release
+mvn package -P release
 
