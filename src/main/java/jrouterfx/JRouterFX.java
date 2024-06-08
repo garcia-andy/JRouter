@@ -40,7 +40,7 @@ public class JRouterFX {
     }
 
     /**
-     * Class for wrapper of hooks
+     * Class for wrapper Loaders Hooks
      */
     public static class Loaders extends LoadersHook {
         /**
