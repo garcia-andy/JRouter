@@ -6,7 +6,7 @@ JRouter is for easy ways to create Reactive GUIs agnostic of the GUI Provider.
 ### Route Annotation: 
 #### For annotate class and automatic load a view (of fxml for example)
 ```java
-import jrouterfx.Api.Route;
+import jrouter.Api.Route;
 
 @Route(url = "/", view = "init.fxml")
 public class Index {
@@ -17,7 +17,7 @@ public class Index {
 }
 
 // or
-import jrouterfx.Api.Route;
+import jrouter.Api.Route;
 
 @Route("/")
 public class Index {
@@ -42,21 +42,21 @@ App<Scene> app = new App<Scene>("Title of The Window", new LazyLoader<Scene>());
 #### Hooks for create the Application (Most recommended)
 ```java
 // for absolute loader use
-App<Scene> app = JRouterFX.Hooks.App.useApp("Title of The Window");
+App<Scene> app = JRouter.Hooks.App.useApp("Title of The Window");
 app.start(GuiProvider);
 
 // for lazy loading use
-App<Scene> app = JRouterFX.Hooks.App.useLazyApp("Title of The Window");
+App<Scene> app = JRouter.Hooks.App.useLazyApp("Title of The Window");
 app.start(GuiProvider);
 
 // OR
 
 // for absolute loader use
-App<Scene> app = JRouterFX.Hooks.App.useApp("Title of The Window",GuiProvider);
+App<Scene> app = JRouter.Hooks.App.useApp("Title of The Window",GuiProvider);
 app.start();
 
 // for lazy loading use
-App<Scene> app = JRouterFX.Hooks.App.useLazyApp("Title of The Window",GuiProvider);
+App<Scene> app = JRouter.Hooks.App.useLazyApp("Title of The Window",GuiProvider);
 app.start();
 ```
 
@@ -97,14 +97,14 @@ public class MyObservableType extends Observable<MyObserver>{
 ### States: 
 #### Easy reactivity on one value
 ```java
-State<String> name = JRouterFX.Hooks.useState("Andy");
+State<String> name = JRouter.Hooks.useState("Andy");
 // or
 State<String> name = new State<String>("Andy");
 ```
 
 #### Observer object with States
 ```java
-State<String> name = JRouterFX.Hooks.useState("Andy", ObserverObj);
+State<String> name = JRouter.Hooks.useState("Andy", ObserverObj);
 // or
 State<String> name = new State<String>("Andy");
 name.subscribe(ObserverObj);
@@ -113,7 +113,7 @@ name.subscribe(ObserverObj);
 ### Signals: 
 #### Reactivity with events callbacks
 ```java
-Signal<String> sign = JRouterFX.Hooks.useSignal("Andy",
+Signal<String> sign = JRouter.Hooks.useSignal("Andy",
     (s) -> { System.out.println("onChange: " + s.get()); },
     (s) -> { System.out.println("onRequest: " + s.get()); },
     (s) -> { System.out.println("onSubscribe: " + s.get()); },
