@@ -4,11 +4,11 @@ import jrouterfx.hooks.*;
 /**
  * Global Class for access to Hooks and all Apis
 */
-public class JRouterFX {
+public class JRouter {
     /**
      * !Unused
      */
-    public JRouterFX(){}
+    public JRouter(){}
 
     /**
      * Class for wrapper of hooks
@@ -37,17 +37,28 @@ public class JRouterFX {
             */
             public Signal(){}
         }
+
+        /**
+         * Class with the useApp & useLazyApp apis
+         */
+        public static class App extends AppHook{
+            /**
+             * !Unused
+            */
+            public App(){}
+        }
+
+        /**
+         * Class for wrapper Loaders Hooks
+         */
+        public static class Loaders extends LoadersHook {
+            /**
+            * !Unused
+            */
+            public Loaders(){}
+        }
     }
 
-    /**
-     * Class for wrapper Loaders Hooks
-     */
-    public static class Loaders extends LoadersHook {
-        /**
-        * !Unused
-        */
-        public Loaders(){}
-    }
 
     
 }
