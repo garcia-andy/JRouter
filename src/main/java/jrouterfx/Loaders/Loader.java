@@ -1,24 +1,38 @@
 package jrouterfx.Loaders;
+import jrouterfx.Api.Route;
 /* IMPORTS ESPECIFICS */
-import javafx.stage.Stage;
-import jrouterfx.hooks.JRouter;
+import jrouterfx.GuiProviders.InterfaceGuiProvider;
 
 /**
  * Principal Interface Implementation for use JRouterFX
  * @author Andy Garcia
  * @version 0.1, 2024/5/6
 */
-public class Loader extends MainLoader {
+public class Loader<SceneType> extends MainLoader<SceneType> {
     
     /**
      * Constructor for initialize Object and load the first folders parse
      * @param c Class for load working directory
      * @param projectName the project name for load first place
      * @param routesFolder the routes folder for load first place
-     * @param mainStage the main stage of the FXML application
+     * @param prov The GUI Provider
      */
-    public Loader(Class<?> c, String projectName, String routesFolder, Stage mainStage){
-        super(c,projectName, routesFolder, mainStage);
+    public Loader(
+        Class<?> c, 
+        String projectName, 
+        String routesFolder, 
+        InterfaceGuiProvider<SceneType> prov
+    ){
+        super(c,projectName, routesFolder, prov);
+        load();
+    }
+
+    /**
+     * Constructor for initialize Object and load the first folders parse
+     * @param prov The GUI Provider
+     */
+    public Loader(InterfaceGuiProvider<SceneType> prov){
+        super(prov);
         load();
     }
 
@@ -26,10 +40,13 @@ public class Loader extends MainLoader {
      * Constructor for initialize Object and load the first folders parse
      * @param projectName the project name for load first place
      * @param routesFolder the routes folder for load first place
-     * @param mainStage the main stage of the FXML application
+     * @param prov The GUI Provider
      */
-    public Loader(String projectName, String routesFolder, Stage mainStage)
-    { this(null,projectName, routesFolder, mainStage); }
+    public Loader(
+        String projectName, 
+        String routesFolder, 
+        InterfaceGuiProvider<SceneType> prov
+    ){ this(null,projectName, routesFolder, prov); }
     
     /**
      * Loading file partitions 
@@ -46,9 +63,10 @@ public class Loader extends MainLoader {
             && (parts[parts.length-1])
             .toLowerCase().contains("index")
         ){
-            String reconstruct = parts[0];
-            for(int i=1; i < (parts.length-1); i++)
-                reconstruct = endSanitizer(reconstruct) + parts[i];
+            String reconstruct = file.replace("/" + parts[parts.length-1], "");
+            //String reconstruct = parts[0];
+            //for(int i=1; i < (parts.length-1); i++)
+            //    reconstruct = endSanitizer(reconstruct) + parts[i];
             _routes.put(reconstruct, cls);
             System.out.println(
                 "Loaded " 
@@ -64,7 +82,8 @@ public class Loader extends MainLoader {
      */
     @Override
     public void load(){
-        loader( (String file, String pkgName, Class<?> cls, JRouter router) -> {
+        loader( 
+        (String file, String pkgName, Class<?> cls, Route router) -> {
             if(
             (
                 file.toLowerCase().contains("index") 
@@ -78,7 +97,7 @@ public class Loader extends MainLoader {
             _routes.put(file, cls);
             System.out.println("Loaded " + pkgName + " route: " + file);
             return true;
-        } );
+        });
 
         // finding default page
         for(String Key: _routes.keySet()){

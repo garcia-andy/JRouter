@@ -4,12 +4,11 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 /* IMPORTS ALL */
 import java.util.*;
 
+import jrouterfx.Api.Route;
+import jrouterfx.GuiProviders.InterfaceGuiProvider;
 import jrouterfx.Utils.FolderParser;
 import jrouterfx.hooks.*;
 import jrouterfx.reactive.*;
@@ -20,7 +19,7 @@ import lombok.*;
  * @author Andy Garcia
  * @version 0.1, 2024/5/6
 */
-public abstract class MainLoader implements LoaderInterface {
+public abstract class MainLoader<SceneType> implements LoaderInterface {
     @Getter
     protected Signal<String> _activeRoute = SignalHook.useSignal();
     @Getter
@@ -36,22 +35,9 @@ public abstract class MainLoader implements LoaderInterface {
     new HashMap<String,Class<?>>();
 
     /**
-     * The main stage of the FXML application
+     * The GUI Provider
      */
-    @Getter
-    protected Stage _mainStage;
-
-    /**
-     * The FXML loader for load files views (.fxml)
-     */
-    @Getter
-    protected FXMLLoader _loader;
-
-    /**
-     * The viewed scene
-     */
-    @Getter @Setter
-    protected Scene _scene;
+    InterfaceGuiProvider<SceneType> _provider;
 
     /**
      * The Project Name
@@ -81,6 +67,11 @@ public abstract class MainLoader implements LoaderInterface {
         .getClassLoader().getResource(path);
     }
 
+    /**
+     * Getting the path of the folder from a class
+     * @param c class for get directory work
+     * @return String Directory Path
+     */
     public static String getClassesWork(Class<?> c)
     { return c.getProtectionDomain().getCodeSource().getLocation().getFile(); }
 
@@ -104,38 +95,63 @@ public abstract class MainLoader implements LoaderInterface {
     }
 
     /**
+     * Get the project name in the System Property exec.mainClass
+     * @return the name of the main Project
+     */
+    public static String getProjectNameDetected(){
+        String mainApp = System.getProperty("exec.mainClass");
+        int idx = (mainApp.indexOf(".") <= 0) 
+            ? mainApp.length() 
+            : mainApp.indexOf(".")
+        ;
+        return mainApp.substring(0, idx);
+    }
+
+
+    /**
+     * Get the project MainClass in the System Property exec.mainClass
+     * @return the Class of the main Project
+     */
+    public static Class<?> getMainClass(){
+        String mainApp = System.getProperty("exec.mainClass");
+        try {
+            return MainLoader.class.getClassLoader().loadClass(mainApp);
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+    }
+
+    /**
      * Constructor for initialize
      * @param classType class for load working directory
      * @param projectName the project name for load first place
      * @param routesFolder the routes folder for load first place
-     * @param mainStage the main stage of the FXML application
+     * @param prov The GUI Provider
      */
     public MainLoader(
         Class<?> classType,
         String projectName, 
-        String routesFolder, 
-        Stage mainStage
+        String routesFolder,
+        InterfaceGuiProvider<SceneType> prov
     ){
         _class = classType;
         _projectFolder = getClassesWork(classType!=null ? classType : getClass());
         _projectName = projectName;
         _routesName = routesFolder;
-        _mainStage = mainStage;
-        _loader = new FXMLLoader();
+        _provider = prov;
     }
 
     /**
      * Constructor for initialize
-     * @param projectName the project name for load first place
-     * @param routesFolder the routes folder for load first place
-     * @param mainStage the main stage of the FXML application
+     * @param prov The GUI Provider
      */
-    public MainLoader(
-        String projectName, 
-        String routesFolder, 
-        Stage mainStage
-    ){ this(null, projectName, routesFolder, mainStage);}
-
+    public MainLoader(InterfaceGuiProvider<SceneType> prov){
+        _class = getMainClass();
+        _projectFolder = getClassesWork(_class!=null ? _class : getClass());
+        _projectName = getProjectNameDetected();
+        _routesName = "routes";
+        _provider = prov;
+    }
 
     /**
      * Load all finding a route
@@ -211,20 +227,17 @@ public abstract class MainLoader implements LoaderInterface {
     protected Object load_impl(Class<?> cls, String route){
         Object ret = null;
         if( cls == null ) return ret;
-        JRouter router = cls.getAnnotation(JRouter.class);
+        Route router = cls.getAnnotation(Route.class);
 
         String errSms = "Error while launch route -> " + route + " [";
         try {
-
             Constructor<?> constr = cls.getConstructor(MainLoader.class);
-            if( constr != null ){
-                ret = constr.newInstance(this);
-                _activeRoute.set(route);
-                _activeController.set(ret);
+            ret = constr.newInstance(this);
+            _activeRoute.set(route);
+            _activeController.set(ret);
 
-                if( !router.view().trim().equals("") )
-                    loadView(router.view(), ret);
-            }
+            if( !router.view().trim().equals("") )
+                loadView(router.view(), ret);
 
         } catch (
                 NoSuchMethodException 
@@ -247,7 +260,7 @@ public abstract class MainLoader implements LoaderInterface {
     }
 
     protected interface LoaderCallable{
-        boolean run(String file, String pkg, Class<?> cls,JRouter router);
+        boolean run(String file, String pkg, Class<?> cls,Route router);
     }
 
     protected void loader(LoaderCallable c){
@@ -273,7 +286,7 @@ public abstract class MainLoader implements LoaderInterface {
                 Class<?> cls = 
                 getClass().getClassLoader().loadClass(pkgName);
                 
-                JRouter router = cls.getAnnotation(JRouter.class);
+                Route router = cls.getAnnotation(Route.class);
                 if( router == null ) continue;
                 
                 if( !router.url().equals("") )
@@ -317,25 +330,6 @@ public abstract class MainLoader implements LoaderInterface {
      */
     @Override
     public void loadView(String view, Object ctrl) throws IOException {
-        _loader = new FXMLLoader();
-        _loader.setController(ctrl);
-        //! TODO Location maybe set no resources found
-            URL file = loadSrc(view);
-            while( file == null ) file = loadSrc(view);
-            _loader.setLocation(file);
-        update(new Scene(_loader.load()));
+        _provider.loadView(view, ctrl);
     }
-
-    /**
-     * Update the main scene
-     * Automatic call by loadView
-     * @param scn scene to update the main scene and main stage
-     */
-    @Override
-    public void update(Scene scn) {
-        _scene = scn;
-        _mainStage.setScene(_scene);
-        _mainStage.show();
-    }
-    
 }
