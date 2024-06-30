@@ -1,12 +1,14 @@
-# JRouterFX Framework
+# JRouter Framework
 
-JRouterFX is for easy ways to use JavaFX & FXML files for controllers and views.
+JRouter is for easy ways to create Reactive GUIs agnostic of the GUI Provider.
 
 ## We Have:
-### JRouter Annotation: 
->For annotate and class and automatic load a view
+### Route Annotation: 
+#### For annotate class and automatic load a view (of fxml for example)
 ```java
-@JRouter(url = "/", view = "init.fxml")
+import jrouterfx.Api.Route;
+
+@Route(url = "/", view = "init.fxml")
 public class Index {
     // The constructor recive abstract class MainLoader automatically called
     public Index(MainLoader m){
@@ -15,7 +17,9 @@ public class Index {
 }
 
 // or
-@JRouter("/")
+import jrouterfx.Api.Route;
+
+@Route("/")
 public class Index {
     // The constructor recive abstract class MainLoader automatically called
     public Index(MainLoader m){
@@ -23,23 +27,91 @@ public class Index {
     }
 }
 ```
-### Normal Loader: 
->For first load all routes and controllers
+
+### Abstractions Layers: 
+#### App for Automatics Loaders
 ```java
-Loader ld = JRouterFX.Loaders.useLoader(App.class,"projectName","routesFolder");
+App<Scene> app = new App<Scene>("Title of The Window", new AbsoluteLoader<Scene>());
+// same of
+App<Scene> app = new App<Scene>("Title of The Window");
+
+// for lazy loading use
+App<Scene> app = new App<Scene>("Title of The Window", new LazyLoader<Scene>());
 ```
-### Lazy Loader: 
->For load controllers and views on demand
+
+#### Hooks for create the Application (Most recommended)
 ```java
-LazyLoader ld = JRouterFX.Loaders.useLazyLoader(App.class,"projectName","routesFolder");
+// for absolute loader use
+App<Scene> app = JRouterFX.Hooks.App.useApp("Title of The Window");
+app.start(GuiProvider);
+
+// for lazy loading use
+App<Scene> app = JRouterFX.Hooks.App.useLazyApp("Title of The Window");
+app.start(GuiProvider);
+
+// OR
+
+// for absolute loader use
+App<Scene> app = JRouterFX.Hooks.App.useApp("Title of The Window",GuiProvider);
+app.start();
+
+// for lazy loading use
+App<Scene> app = JRouterFX.Hooks.App.useLazyApp("Title of The Window",GuiProvider);
+app.start();
 ```
+
+#### Your own Application Providers
+```java
+public class MyAbsoluteLoader <SceneT> implements ApplicationProvider<SceneT>{
+    @Override
+    public MainLoader<SceneT> provide(GuiProvider<SceneT> prov) 
+    { // do somethings }
+}
+```
+
+### GUI Providers
+#### Your own GUI Provider
+```java
+public class JFXProvider extends GuiProvider<Scene>
+```
+
+### Observers
+#### API for Observer objects, implement the interface Observer
+```java
+public class MyObserver implements Observer{
+    @Override
+    public void update(){
+        // do somethings...
+    }
+}
+```
+
+### Observables
+#### API for Observable objects, extend the generic type Observable
+```java
+public class MyObservableType extends Observable<MyObserver>{
+    // do somethings...
+}
+```
+
 ### States: 
->For reactivity on one value
+#### Easy reactivity on one value
 ```java
 State<String> name = JRouterFX.Hooks.useState("Andy");
+// or
+State<String> name = new State<String>("Andy");
 ```
+
+#### Observer object with States
+```java
+State<String> name = JRouterFX.Hooks.useState("Andy", ObserverObj);
+// or
+State<String> name = new State<String>("Andy");
+name.subscribe(ObserverObj);
+```
+
 ### Signals: 
->For reactivity with events callbacks
+#### Reactivity with events callbacks
 ```java
 Signal<String> sign = JRouterFX.Hooks.useSignal("Andy",
     (s) -> { System.out.println("onChange: " + s.get()); },
@@ -47,17 +119,25 @@ Signal<String> sign = JRouterFX.Hooks.useSignal("Andy",
     (s) -> { System.out.println("onSubscribe: " + s.get()); },
     (s) -> { System.out.println("onGet: Some One get the value!"); }
 );
+// or
+Signal<String> sign = new Signal<String>("Andy");
+sign.onChange((s) -> { System.out.println("onChange: " + s.get()); });
+sign.onRequest((s) -> { System.out.println("onRequest: " + s.get()); });
+sign.onSubscribe((s) -> { System.out.println("onSubscribe: " + s.get()); });
+sign.listen(
+    Signal.SignalType.onGet, 
+    (s) -> { System.out.println("onGet: Some One get the value!"); }
+);
 ```
 
-## The class JRouterFX for access to sub packages:
-### JRouterFX.Hook: State & Signal Hooks easy access
-### JRouterFX.Loaders: Loader & LazyLoader Hooks easy access
+## The class JRouter for easy access to Hooks:
+### JRouter.Hook: State, Signal, App & Loaders 
 
 ```java
 /**
  * Global Class for access to Hooks and all Apis
 */
-public class JRouterFX {
+public class JRouter {
 
     /**
      * Class for wrapper of Hooks
@@ -72,10 +152,16 @@ public class JRouterFX {
          * Class with the useSignal apis
          */
         public static class Signal extends SignalHook{}
+
+        /**
+         * Class with the useApp & useLazyApp apis
+         */
+        public static class App extends AppHook{}
+
+        /**
+         * Class for wrapper Loaders Hooks
+         */
+        public static class Loaders extends LoadersHook {} 
     }
-    /**
-     * Class for wrapper Loaders Hooks
-     */
-    public static class Loaders extends LoadersHook {} 
 }
 ```
