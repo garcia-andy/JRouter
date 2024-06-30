@@ -1,20 +1,33 @@
 package jrouterfx.Loaders;
-import jrouterfx.hooks.JRouter;
-/* IMPORTS ESPECIFICS */
-import javafx.stage.Stage;
+import jrouterfx.Api.Route;
+import jrouterfx.GuiProviders.InterfaceGuiProvider;
 
-
-public class LazyLoader extends MainLoader {
+public class LazyLoader<SceneType> extends MainLoader<SceneType> {
 
     /**
      * Constructor for initialize Object and load the first folders parse
      * @param c Class for load working directory
      * @param projectName the project name for load first place
      * @param routesFolder the routes folder for load first place
-     * @param mainStage the main stage of the FXML application
+     * @param prov The GUI Provider
      */
-    public LazyLoader(Class<?> c, String projectName, String routesFolder, Stage mainStage){
-        super(c,projectName, routesFolder, mainStage);
+    public LazyLoader(
+        Class<?> c, 
+        String projectName, 
+        String routesFolder, 
+        InterfaceGuiProvider<SceneType> prov
+    ){
+        super(c,projectName, routesFolder, prov);
+        load();
+    }
+
+    /**
+     * Constructor for initialize Object and load the first folders parse
+     * @param c Class for load working directory
+     * @param prov The GUI Provider
+     */
+    public LazyLoader(InterfaceGuiProvider<SceneType> prov){
+        super(prov);
         load();
     }
 
@@ -22,10 +35,10 @@ public class LazyLoader extends MainLoader {
      * Constructor for initialize Object and load the first folders parse
      * @param projectName the project name for load first place
      * @param routesFolder the routes folder for load first place
-     * @param mainStage the main stage of the FXML application
+     * @param prov The GUI Provider
      */
-    public LazyLoader(String projectName, String routesFolder, Stage mainStage){
-        this(null, projectName, routesFolder, mainStage);
+    public LazyLoader(String projectName, String routesFolder, InterfaceGuiProvider<SceneType> prov){
+        this(null, projectName, routesFolder, prov);
     }
 
 
@@ -36,7 +49,7 @@ public class LazyLoader extends MainLoader {
      */
     @Override
     public void load() {
-        loader((String file, String pkgName, Class<?> cls,JRouter router) -> {
+        loader((String file, String pkgName, Class<?> cls,Route router) -> {
             if(
                 (router.url().equals("") && router.value().equals(""))
                 && 

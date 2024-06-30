@@ -1,7 +1,7 @@
 package jrouterfx.hooks;
 
 import jrouterfx.Loaders.*;
-import javafx.stage.Stage;
+import jrouterfx.GuiProviders.*;
 
 /**
  * Class with Hooks for Loaders creations
@@ -12,21 +12,45 @@ public class LoadersHook {
      * @param c Class for load working directory
      * @param projectName name of the project to load
      * @param routesFolder routes folder of parse (relative to project folder)
-     * @param mainStage the main stage of the FXML states
+     * @param prov The GUI Provider
      * @return The object Loader
      */
-    public static Loader useNormalLoader(Class<?> c,String projectName, String routesFolder, Stage mainStage)
-    { return new Loader(c,projectName, routesFolder, mainStage); }
+    public static <SceneType> Loader<SceneType> useLoader(
+        Class<?> c,
+        String projectName, 
+        String routesFolder, 
+        InterfaceGuiProvider<SceneType> prov
+    ){ return new Loader<SceneType>(c,projectName, routesFolder, prov); }
+
+    /**
+     * Hook for loader creation (absolute loader)
+     * @param prov The GUI Provider
+     * @return The object Loader
+     */
+    public static <SceneType> Loader<SceneType> useLoader(InterfaceGuiProvider<SceneType> prov)
+    { return new Loader<SceneType>(prov); }
 
     /**
      * Hook for laxy loader creation (dynamic requests)
      * @param c Class for load working directory
      * @param projectName name of the project to load
      * @param routesFolder routes folder of parse (relative to project folder)
-     * @param mainStage the main stage of the FXML states
+     * @param prov The GUI Provider
      * @return The object LazyLoader
      */
-    public static LazyLoader useLazyLoader(Class<?> c,String projectName, String routesFolder, Stage mainStage)
-    { return new LazyLoader(c,projectName, routesFolder, mainStage); }
+    public static <SceneType> LazyLoader<SceneType> useLazyLoader(
+        Class<?> c,
+        String projectName, 
+        String routesFolder, 
+        InterfaceGuiProvider<SceneType> prov
+    ){ return new LazyLoader<SceneType>(c,projectName, routesFolder, prov); }
+
+    /**
+     * Hook for laxy loader creation (dynamic requests)
+     * @param prov The GUI Provider
+     * @return The object LazyLoader
+     */
+    public static <SceneType> LazyLoader<SceneType> useLazyLoader(InterfaceGuiProvider<SceneType> prov)
+    { return new LazyLoader<SceneType>(prov); }
 
 }

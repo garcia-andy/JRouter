@@ -1,7 +1,6 @@
 package jrouterfx.hooks;
 import jrouterfx.reactive.*;
 
-
 /**
  * Class for States Hooks Creations
  */
