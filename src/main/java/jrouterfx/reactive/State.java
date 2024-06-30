@@ -26,6 +26,7 @@ public class State<T> extends Observable<Observer> {
                 _values.push(value);
             _AvaiablSemaphore.release();
         });
+        
         update();
         notifyObservers();
     }
@@ -34,7 +35,6 @@ public class State<T> extends Observable<Observer> {
         update();
         return _valueState;
     }
-
     
     private void update() {
         if( !_updating.tryAcquire() ) return;
