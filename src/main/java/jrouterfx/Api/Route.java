@@ -1,4 +1,4 @@
-package jrouterfx.hooks;
+package jrouterfx.Api;
 
 import java.lang.annotation.Target;
 import java.lang.annotation.*;
@@ -9,8 +9,9 @@ import java.lang.annotation.*;
 @Inherited
 /**
  * Mark all controllers as JRouters
+ * value 
 */
-public @interface JRouter {
+public @interface Route {
     String value() default "";
     String url() default "";
     String view() default "";
