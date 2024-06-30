@@ -1,4 +1,4 @@
-package jrouterfx.GuiProviders;
+package jrouter.GuiProviders;
 import java.io.IOException;
 
 public interface InterfaceGuiProvider<Scene_t> {

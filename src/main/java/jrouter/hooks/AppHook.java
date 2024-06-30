@@ -1,6 +1,6 @@
-package jrouterfx.hooks;
-import jrouterfx.Apps.*;
-import jrouterfx.GuiProviders.GuiProvider;
+package jrouter.hooks;
+import jrouter.Apps.*;
+import jrouter.GuiProviders.GuiProvider;
 
 public class AppHook {
     

@@ -1,7 +1,8 @@
-package jrouterfx.reactive;
-import jrouterfx.hooks.*;
+package jrouter.reactive;
 import lombok.Getter;
 import java.util.*;
+
+import jrouter.hooks.*;
 
 public class Signal<T> implements Observer {
 

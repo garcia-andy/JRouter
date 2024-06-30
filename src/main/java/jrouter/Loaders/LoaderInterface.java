@@ -1,4 +1,4 @@
-package jrouterfx.Loaders;
+package jrouter.Loaders;
 
 import java.io.IOException;
 

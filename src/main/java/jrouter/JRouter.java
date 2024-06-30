@@ -1,5 +1,5 @@
-package jrouterfx;
-import jrouterfx.hooks.*;
+package jrouter;
+import jrouter.hooks.*;
 
 /**
  * Global Class for access to Hooks and all Apis

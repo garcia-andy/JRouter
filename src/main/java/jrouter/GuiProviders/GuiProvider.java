@@ -1,4 +1,4 @@
-package jrouterfx.GuiProviders;
+package jrouter.GuiProviders;
 import java.net.URL;
 
 public abstract class GuiProvider<SceneT> implements InterfaceGuiProvider<SceneT> {

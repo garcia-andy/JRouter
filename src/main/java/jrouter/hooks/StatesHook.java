@@ -1,5 +1,5 @@
-package jrouterfx.hooks;
-import jrouterfx.reactive.*;
+package jrouter.hooks;
+import jrouter.reactive.*;
 
 /**
  * Class for States Hooks Creations

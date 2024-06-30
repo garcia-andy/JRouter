@@ -1,7 +1,7 @@
-package jrouterfx.Apps;
+package jrouter.Apps;
 
-import jrouterfx.GuiProviders.GuiProvider;
-import jrouterfx.Loaders.MainLoader;
+import jrouter.GuiProviders.GuiProvider;
+import jrouter.Loaders.MainLoader;
 
 /**
  * The Interface for All Loader Providers (Application Types)

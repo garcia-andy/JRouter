@@ -1,7 +1,6 @@
-package jrouterfx.Loaders;
-import jrouterfx.Api.Route;
-/* IMPORTS ESPECIFICS */
-import jrouterfx.GuiProviders.InterfaceGuiProvider;
+package jrouter.Loaders;
+import jrouter.Api.Route;
+import jrouter.GuiProviders.InterfaceGuiProvider;
 
 /**
  * Principal Interface Implementation for use JRouterFX

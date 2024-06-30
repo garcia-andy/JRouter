@@ -1,4 +1,4 @@
-package jrouterfx.reactive;
+package jrouter.reactive;
 import java.util.ArrayList;
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
-package jrouterfx.hooks;
+package jrouter.hooks;
 
-import jrouterfx.Loaders.*;
-import jrouterfx.GuiProviders.*;
+import jrouter.GuiProviders.*;
+import jrouter.Loaders.*;
 
 /**
  * Class with Hooks for Loaders creations

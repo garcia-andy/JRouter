@@ -1,8 +1,8 @@
-package jrouterfx.Apps;
+package jrouter.Apps;
 
-import jrouterfx.JRouter;
-import jrouterfx.GuiProviders.GuiProvider;
-import jrouterfx.Loaders.MainLoader;
+import jrouter.JRouter;
+import jrouter.GuiProviders.GuiProvider;
+import jrouter.Loaders.MainLoader;
 
 /**
  * Lazy Loader Provider

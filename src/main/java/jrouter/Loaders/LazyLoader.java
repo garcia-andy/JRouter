@@ -1,6 +1,6 @@
-package jrouterfx.Loaders;
-import jrouterfx.Api.Route;
-import jrouterfx.GuiProviders.InterfaceGuiProvider;
+package jrouter.Loaders;
+import jrouter.Api.Route;
+import jrouter.GuiProviders.InterfaceGuiProvider;
 
 public class LazyLoader<SceneType> extends MainLoader<SceneType> {
 

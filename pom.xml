@@ -4,15 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>jrouterfx</groupId>
-    <artifactId>jrouterfx</artifactId>
+    <groupId>jrouter</groupId>
+    <artifactId>jrouter</artifactId>
     <version>0.1.0</version>
 
-    <name>JRouterFX</name>
+    <name>JRouter</name>
     <description>
-    JRouterFX use FXML for folders routing
+    JRouter use folders routing or Annotation Routing
     </description>
-    <url>http://github.com/garcia-andy/jrouterfx.git</url>
+    <url>http://github.com/garcia-andy/jrouter.git</url>
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
@@ -24,7 +24,7 @@
         <developer>
             <name>Andy Garcia</name>
             <email>garciandy579@gmail.com</email>
-            <organization>JRouterFX</organization>
+            <organization>JRouter</organization>
             <organizationUrl>https://github.com/garcia-andy</organizationUrl>
         </developer>
     </developers>

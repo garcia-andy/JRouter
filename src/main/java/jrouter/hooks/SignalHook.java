@@ -1,7 +1,8 @@
-package jrouterfx.hooks;
+package jrouter.hooks;
 
-import jrouterfx.reactive.*;
 import java.util.ArrayList;
+
+import jrouter.reactive.*;
 
 /**
  * Class for Signals Hooks Creations

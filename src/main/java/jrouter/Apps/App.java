@@ -1,8 +1,8 @@
-package jrouterfx.Apps;
+package jrouter.Apps;
 
-import jrouterfx.reactive.Signal;
-import jrouterfx.GuiProviders.GuiProvider;
-import jrouterfx.Loaders.MainLoader;
+import jrouter.GuiProviders.GuiProvider;
+import jrouter.Loaders.MainLoader;
+import jrouter.reactive.Signal;
 import lombok.Getter;
 
 /**

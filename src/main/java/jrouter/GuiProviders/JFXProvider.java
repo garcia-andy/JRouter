@@ -1,4 +1,4 @@
-package jrouterfx.GuiProviders;
+package jrouter.GuiProviders;
 import java.io.IOException;
 import java.net.URL;
 
@@ -33,7 +33,7 @@ public class JFXProvider extends GuiProvider<Scene> {
 
     /**
      * The JavaFX Provider need the JavaFX Main Stage
-     * !(view documentation for more info)
+     * !(view documentation of JavaFX for more info)
      * @param mainStage the main stage of JavaFX Application
      */
     public JFXProvider(Stage mainStage){

@@ -1,4 +1,4 @@
-package jrouterfx.Loaders;
+package jrouter.Loaders;
 /* IMPORTS ESPECIFICS */
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -7,11 +7,11 @@ import java.net.URL;
 /* IMPORTS ALL */
 import java.util.*;
 
-import jrouterfx.Api.Route;
-import jrouterfx.GuiProviders.InterfaceGuiProvider;
-import jrouterfx.Utils.FolderParser;
-import jrouterfx.hooks.*;
-import jrouterfx.reactive.*;
+import jrouter.Api.Route;
+import jrouter.GuiProviders.InterfaceGuiProvider;
+import jrouter.Utils.FolderParser;
+import jrouter.hooks.*;
+import jrouter.reactive.*;
 import lombok.*;
 
 /**
